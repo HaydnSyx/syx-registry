@@ -1,0 +1,37 @@
+### 注册实例
+POST http://localhost:8484/reg?service=cn.syx.rpc.demo.api.UserService
+Content-Type: application/json
+
+{
+  "schema": "http",
+  "host": "127.0.0.1",
+  "port": 6081,
+  "context": "rpc"
+}
+
+### 注册实例
+POST http://localhost:8484/reg?service=cn.syx.rpc.demo.api.UserService
+Content-Type: application/json
+
+{
+  "schema": "http",
+  "host": "127.0.0.1",
+  "port": 6082,
+  "context": "rpc"
+}
+
+### 卸载实例
+POST http://localhost:8484/unreg?service=cn.syx.rpc.demo.api.UserService
+Content-Type: application/json
+
+{
+  "schema": "http",
+  "host": "127.0.0.1",
+  "port": 6081,
+  "context": "rpc"
+}
+
+### 获取所有实例
+GET http://localhost:8484/findAll?service=cn.syx.rpc.demo.api.UserService
+
+
