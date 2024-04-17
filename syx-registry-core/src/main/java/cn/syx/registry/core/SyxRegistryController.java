@@ -1,5 +1,7 @@
 package cn.syx.registry.core;
 
+import cn.syx.registry.core.cluster.Cluster;
+import cn.syx.registry.core.cluster.Server;
 import cn.syx.registry.core.model.InstanceMeta;
 import cn.syx.registry.core.service.RegistryService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +20,8 @@ public class SyxRegistryController {
 
     @Autowired
     private RegistryService registryService;
+    @Autowired
+    private Cluster cluster;
 
     @RequestMapping("/reg")
     public InstanceMeta registry(@RequestParam("service") String service,
@@ -55,5 +59,29 @@ public class SyxRegistryController {
     @RequestMapping("/versions")
     public Map<String, Long> versions(@RequestParam("services") String services) {
         return registryService.versions(services.split(","));
+    }
+
+    @RequestMapping("/info")
+    public Server info() {
+        return cluster.self();
+    }
+
+    @RequestMapping("/cluster")
+    public List<Server> cluster() {
+        log.info(" ===> info: {}", cluster.getServers());
+        return cluster.getServers();
+    }
+
+    @RequestMapping("/leader")
+    public Server leader() {
+        log.info(" ===> leader: {}", cluster.leader());
+        return cluster.leader();
+    }
+
+    @RequestMapping("/sl")
+    public Server sl() {
+        cluster.self().setLeader(true);
+        log.info(" ===> leader: {}", cluster.self());
+        return cluster.self();
     }
 }
