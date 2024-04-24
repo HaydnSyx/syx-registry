@@ -2,8 +2,10 @@ package cn.syx.registry.core;
 
 import cn.syx.registry.core.cluster.Cluster;
 import cn.syx.registry.core.cluster.Server;
+import cn.syx.registry.core.cluster.Snapshot;
 import cn.syx.registry.core.model.InstanceMeta;
 import cn.syx.registry.core.service.RegistryService;
+import cn.syx.registry.core.service.SyxRegistryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,14 +29,22 @@ public class SyxRegistryController {
     public InstanceMeta registry(@RequestParam("service") String service,
                                  @RequestBody InstanceMeta instance) {
         log.info("registry service: {}, instance: {}", service, instance);
+        checkLeader();
         registryService.register(service, instance);
         return instance;
+    }
+
+    private void checkLeader() {
+        if (!cluster.self().isLeader()) {
+            throw new RuntimeException("current server is not leader, can not do this operation! leader is " + cluster.leader().getUrl());
+        }
     }
 
     @RequestMapping("/unreg")
     public InstanceMeta unregister(@RequestParam("service") String service,
                                    @RequestBody InstanceMeta instance) {
         log.info("unregister service: {}, instance: {}", service, instance);
+        checkLeader();
         registryService.unregister(service, instance);
         return instance;
     }
@@ -45,9 +55,10 @@ public class SyxRegistryController {
         return registryService.getAllInstances(service);
     }
 
-    @RequestMapping("/renew")
+    @RequestMapping("/renews")
     public long renew(@RequestParam("services") String services,
                       @RequestBody InstanceMeta instance) {
+        checkLeader();
         return registryService.renew(instance, services.split(","));
     }
 
@@ -83,5 +94,10 @@ public class SyxRegistryController {
         cluster.self().setLeader(true);
         log.info(" ===> leader: {}", cluster.self());
         return cluster.self();
+    }
+
+    @RequestMapping("/snapshot")
+    public Snapshot snapshot() {
+        return SyxRegistryService.snapshot();
     }
 }

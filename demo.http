@@ -20,6 +20,28 @@ Content-Type: application/json
   "context": "rpc"
 }
 
+### 注册实例
+POST http://localhost:8484/reg?service=cn.syx.rpc.demo.api.UserService
+Content-Type: application/json
+
+{
+  "schema": "http",
+  "host": "127.0.0.1",
+  "port": 6083,
+  "context": "rpc"
+}
+
+### 注册实例
+POST http://localhost:8485/reg?service=cn.syx.rpc.demo.api.UserService
+Content-Type: application/json
+
+{
+  "schema": "http",
+  "host": "127.0.0.1",
+  "port": 6083,
+  "context": "rpc"
+}
+
 ### 卸载实例
 POST http://localhost:8484/unreg?service=cn.syx.rpc.demo.api.UserService
 Content-Type: application/json
@@ -33,6 +55,8 @@ Content-Type: application/json
 
 ### 获取所有实例
 GET http://localhost:8484/findAll?service=cn.syx.rpc.demo.api.UserService
+### 获取所有实例
+GET http://localhost:8484/findAll?service=default_dev_app_cn.syx.rpc.demo.api.UserService_1.0.0
 
 ### 保活实例
 POST http://localhost:8484/renew?services=cn.syx.rpc.demo.api.UserService
@@ -59,8 +83,14 @@ Content-Type: application/json
 ### 获取版本号
 GET http://localhost:8484/version?service=cn.syx.rpc.demo.api.UserService
 
+### info
+GET http://localhost:8484/info
+
 ### cluster
 GET http://localhost:8484/cluster
+
+### cluster
+GET http://localhost:8485/cluster
 
 ### leader
 GET http://localhost:8484/leader
@@ -70,3 +100,12 @@ GET http://localhost:8485/leader
 
 ### set-leader
 GET http://localhost:8486/sl
+
+### registry-snapshot
+GET http://localhost:8484/snapshot
+
+### registry-snapshot
+GET http://localhost:8485/snapshot
+
+### registry-snapshot
+GET http://localhost:8486/snapshot

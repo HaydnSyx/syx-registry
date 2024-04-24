@@ -1,5 +1,6 @@
 package cn.syx.registry.core.service;
 
+import cn.syx.registry.core.cluster.Snapshot;
 import cn.syx.registry.core.model.InstanceMeta;
 
 import java.util.List;
