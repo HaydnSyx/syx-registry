@@ -17,6 +17,7 @@
 
     <modules>
         <module>syx-registry-core</module>
+        <module>syx-registry-client</module>
     </modules>
 
     <dependencyManagement>

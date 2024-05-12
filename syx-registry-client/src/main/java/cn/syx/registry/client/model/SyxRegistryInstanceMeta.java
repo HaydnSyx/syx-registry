@@ -1,4 +1,4 @@
-package cn.syx.registry.core.model;
+package cn.syx.registry.client.model;
 
 import com.alibaba.fastjson.JSON;
 import lombok.Data;
@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Data
 @EqualsAndHashCode(of = {"schema", "host", "port", "path"})
-public class InstanceMeta {
+public class SyxRegistryInstanceMeta {
 
     private String schema;
     private String host;
@@ -24,13 +24,13 @@ public class InstanceMeta {
         return String.format("%s_%d", host, port);
     }
 
-    public static InstanceMeta http(String path) {
+    public static SyxRegistryInstanceMeta http(String path) {
         String[] parts = path.split("_");
         return http(parts[0], Integer.parseInt(parts[1]));
     }
 
-    public static InstanceMeta http(String host, int port) {
-        InstanceMeta instance = new InstanceMeta();
+    public static SyxRegistryInstanceMeta http(String host, int port) {
+        SyxRegistryInstanceMeta instance = new SyxRegistryInstanceMeta();
         instance.setSchema("http");
         instance.setHost(host);
         instance.setPort(port);
@@ -42,9 +42,9 @@ public class InstanceMeta {
         return String.format("%s://%s:%d/%s", schema, host, port, path);
     }
 
-    public static InstanceMeta from(String url) {
+    public static SyxRegistryInstanceMeta from(String url) {
         URI uri = URI.create(url);
-        InstanceMeta instance = new InstanceMeta();
+        SyxRegistryInstanceMeta instance = new SyxRegistryInstanceMeta();
         instance.setSchema(uri.getScheme());
         instance.setHost(uri.getHost());
         instance.setPort(uri.getPort());
