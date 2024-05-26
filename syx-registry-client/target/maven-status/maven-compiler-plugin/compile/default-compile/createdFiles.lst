@@ -1,8 +1,0 @@
-META-INF/spring-configuration-metadata.json
-cn/syx/registry/client/SyxRegistryClient$1.class
-cn/syx/registry/client/model/Server.class
-cn/syx/registry/client/model/SyxRegistryInstanceMeta.class
-cn/syx/registry/client/util/OkHttpClientHelper.class
-cn/syx/registry/client/SyxRegistryClient.class
-cn/syx/registry/client/config/SyxRegistryClientAutoConfiguration.class
-cn/syx/registry/client/config/SyxRegistryClientProperties.class
