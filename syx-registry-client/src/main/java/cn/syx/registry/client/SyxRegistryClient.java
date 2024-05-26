@@ -1,9 +1,9 @@
 package cn.syx.registry.client;
 
 import cn.syx.registry.client.config.SyxRegistryClientProperties;
-import cn.syx.registry.client.model.Server;
-import cn.syx.registry.client.model.SyxRegistryInstanceMeta;
-import cn.syx.registry.client.util.OkHttpClientHelper;
+import cn.syx.registry.core.model.RegistryInstanceMeta;
+import cn.syx.registry.core.model.Server;
+import cn.syx.registry.core.util.OkHttpClientHelper;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.TypeReference;
 import lombok.extern.slf4j.Slf4j;
@@ -43,8 +43,7 @@ public class SyxRegistryClient {
 
     private ScheduledExecutorService heartbeatExecutorService;
 
-
-    MultiValueMap<SyxRegistryInstanceMeta, String> RENEWS = new LinkedMultiValueMap<>();
+    MultiValueMap<RegistryInstanceMeta, String> RENEWS = new LinkedMultiValueMap<>();
 
     public SyxRegistryClient(SyxRegistryClientProperties properties) {
         this.properties = properties;
@@ -100,16 +99,16 @@ public class SyxRegistryClient {
         return server.getUrl();
     }
 
-    public void register(String servicePath, SyxRegistryInstanceMeta instance) {
+    public void register(String servicePath, RegistryInstanceMeta instance) {
         log.debug("===> SyxRegistryClient registry start instance: {} for service: {}", instance, servicePath);
-        OkHttpClientHelper.httpPost(client, JSON.toJSONString(instance), registerPath() + servicePath, SyxRegistryInstanceMeta.class);
+        OkHttpClientHelper.httpPost(client, JSON.toJSONString(instance), registerPath() + servicePath, RegistryInstanceMeta.class);
         log.debug("===> SyxRegistryClient registry end instance: {}", instance);
         RENEWS.add(instance, servicePath);
     }
 
-    public void unregister(String servicePath, SyxRegistryInstanceMeta instance) {
+    public void unregister(String servicePath, RegistryInstanceMeta instance) {
         log.debug("===> SyxRegistryClient unregistry start instance: {} for service: {}", instance, servicePath);
-        OkHttpClientHelper.httpPost(client, JSON.toJSONString(instance), unregisterPath() + servicePath, SyxRegistryInstanceMeta.class);
+        OkHttpClientHelper.httpPost(client, JSON.toJSONString(instance), unregisterPath() + servicePath, RegistryInstanceMeta.class);
         log.debug("===> SyxRegistryClient unregistry end instance: {}", instance);
     }
 
@@ -120,9 +119,9 @@ public class SyxRegistryClient {
         return version;
     }
 
-    public List<SyxRegistryInstanceMeta> fetchAll(String servicePath) {
+    public List<RegistryInstanceMeta> fetchAll(String servicePath) {
         log.debug("===> SyxRegistryClient fetchAll start service: {}", servicePath);
-        List<SyxRegistryInstanceMeta> instanceMetas = OkHttpClientHelper.httpGet(client, fetchAllPath() + servicePath, new TypeReference<List<SyxRegistryInstanceMeta>>() {
+        List<RegistryInstanceMeta> instanceMetas = OkHttpClientHelper.httpGet(client, fetchAllPath() + servicePath, new TypeReference<List<RegistryInstanceMeta>>() {
         });
         log.debug("===> SyxRegistryClient fetchAll end service: {}, instances: {}", servicePath, instanceMetas);
         return instanceMetas;

@@ -6,6 +6,7 @@
     <artifactId>syx-registry</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
+
     <name>syx-registry</name>
     <description>syx-registry</description>
 
@@ -18,6 +19,7 @@
     <modules>
         <module>syx-registry-core</module>
         <module>syx-registry-client</module>
+        <module>syx-registry-server</module>
     </modules>
 
     <dependencyManagement>
