@@ -3,6 +3,7 @@ package cn.syx.registry.server.health;
 import cn.syx.registry.core.model.RegistryInstanceMeta;
 import cn.syx.registry.server.service.RegistryService;
 import cn.syx.registry.server.service.SyxRegistryService;
+import cn.syx.toolbox.base.ExecutorTool;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.Executors;
@@ -12,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class SyxHealthChecker implements HealthChecker {
 
-    private RegistryService registryService;
+    private final RegistryService registryService;
 
     private final int timeout = 20000;
 
@@ -48,6 +49,6 @@ public class SyxHealthChecker implements HealthChecker {
 
     @Override
     public void stop() {
-
+        ExecutorTool.gracefulShutdown(executor);
     }
 }

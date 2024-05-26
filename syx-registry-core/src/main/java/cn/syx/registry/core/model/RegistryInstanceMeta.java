@@ -19,15 +19,6 @@ public class RegistryInstanceMeta {
     private boolean status;// online or offline
     private Map<String, String> parameters = new HashMap<>();
 
-    public static RegistryInstanceMeta http(String host, int port) {
-        RegistryInstanceMeta instance = new RegistryInstanceMeta();
-        instance.setSchema("http");
-        instance.setHost(host);
-        instance.setPort(port);
-        instance.setPath("rpc");
-        return instance;
-    }
-
     public String toUrl() {
         return String.format("%s://%s:%d/%s", schema, host, port, path);
     }

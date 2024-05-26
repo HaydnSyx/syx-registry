@@ -24,6 +24,4 @@ hs_err_pid*
 replay_pid*
 /syx-registry.iml
 /.idea/
-/syx-registry-core/target/
-/syx-registry-server/target/
-/syx-registry-client/target/
+target/

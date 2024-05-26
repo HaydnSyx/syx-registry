@@ -1,6 +1,6 @@
 package cn.syx.registry.core.model;
 
-public interface IInstanceMeta {
+public interface IMeta {
 
     String identity();
 }
